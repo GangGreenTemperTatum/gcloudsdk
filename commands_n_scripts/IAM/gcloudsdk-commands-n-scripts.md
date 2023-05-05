@@ -22,11 +22,13 @@
 - List members in a group (static ID)
 
 `gcloud identity groups memberships list --group-email=<group@comany.org>`
+
 `gcloud identity groups memberships list --group-email=<group@comany.org> --format "value(preferredMemberKey.id)"`
 
 - List owners in a group (static ID)
 
 `gcloud identity groups memberships list --group-email=<group@comany.org>`
+
 `gcloud identity groups memberships list --group-email=<group@comany.org> --format "value(preferredMemberKey.id)" --filter='OWNER'`
 
 - Iterate all organization groups, then print those groups including printing the member ID's:
