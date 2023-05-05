@@ -51,3 +51,5 @@
 - List permissions assigned to IAM role
 
 `gcloud iam roles describe roles/<role>`
+`gcloud iam roles describe roles/[roleid]`
+`gcloud iam roles describe [roleid] --project=[projectid]`
