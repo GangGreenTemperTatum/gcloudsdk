@@ -47,3 +47,7 @@
   - Those are just regex filters looking to any role with owner in it and any member that has group as the prefix which all actual groups will have
 
 `gcloud projects get-iam-policy <project-id> --flatten=bindings --filter='bindings.role~owner AND bindings.members~group'`
+
+- List permissions assigned to IAM role
+
+`gcloud iam roles describe roles/<role>`
