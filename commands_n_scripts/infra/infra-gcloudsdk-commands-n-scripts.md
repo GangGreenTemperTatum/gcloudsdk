@@ -23,6 +23,10 @@ gcloud compute instances list --project=$PROJECT_ID --format="csv(name,status,ki
 
 `gcloud compute instances list --project=$PROJECT_ID --filter="EXTERNAL_IP:*" --format="csv[no-heading](name,status,kind,EXTERNAL_IP,creationTimestamp,zone.basename(),machineType,scheduling.provisioningModel)"`
 
+- - Pipe these results to `stdout` by default or use `>` to update file, `>>` to append data to file
+
+`gcloud compute instances list --project=$PROJECT_ID --filter="EXTERNAL_IP:*" --format="csv[no-heading](name,status,kind,EXTERNAL_IP,creationTimestamp,zone.basename(),machineType,scheduling.provisioningModel)" > ~/tmp/vms.csv`
+
 - You can also use the deeper field `networkInterfaces[0].accessConfigs[0].natIP`, for example:
 
 `gcloud compute instances list --project=$PROJECT_ID --filter="networkInterfaces.accessConfigs.type=ONE_TO_ONE_NAT" --format="csv[no-heading](name,status,kind,networkInterfaces[0].accessConfigs[0].natIP,creationTimestamp,zone.basename(),machineType,scheduling.provisioningModel)"`
