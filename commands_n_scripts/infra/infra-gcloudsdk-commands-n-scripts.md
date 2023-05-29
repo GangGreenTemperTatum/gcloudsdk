@@ -21,11 +21,11 @@ gcloud compute instances list --project=$PROJECT_ID --format="csv(name,status,ki
 
 - But the "shortcut" `EXTERNAL_IP` field, cannot be "excepted" as seen it as a direct result for the `gcloud compute instances list` command... but you can filter on it, so, like:
 
-`gcloud compute instances list $PROJECT_ID --filter="EXTERNAL_IP:*" --format="csv[no-heading](name,status,kind,EXTERNAL_IP,creationTimestamp,zone.basename(),machineType,scheduling.provisioningModel)"`
+`gcloud compute instances list --project=$PROJECT_ID --filter="EXTERNAL_IP:*" --format="csv[no-heading](name,status,kind,EXTERNAL_IP,creationTimestamp,zone.basename(),machineType,scheduling.provisioningModel)"`
 
 - You can also use the deeper field `networkInterfaces[0].accessConfigs[0].natIP`
 
-`gcloud compute instances list $PROJECT_ID --filter="networkInterfaces.accessConfigs.type=ONE_TO_ONE_NAT" --format="csv[no-heading](name,status,kind,netwo
+`gcloud compute instances list --project=$PROJECT_ID --filter="networkInterfaces.accessConfigs.type=ONE_TO_ONE_NAT" --format="csv[no-heading](name,status,kind,netwo
 rkInterfaces[0].accessConfigs[0].natIP,creationTimestamp,zone.basename(),machineType,scheduling.provisioningModel)"`
 
 - 
