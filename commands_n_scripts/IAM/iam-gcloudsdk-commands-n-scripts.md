@@ -55,3 +55,26 @@
 `gcloud iam roles describe roles/<role>`
 `gcloud iam roles describe roles/[roleid]`
 `gcloud iam roles describe [roleid] --project=[projectid]`
+
+- List permissions for an API Gateway to act on behalf of Endpoint (need `roles/cloudfunctions.invoker`)
+
+**Specific use-case resources**:
+- https://cloud.google.com/api-gateway/docs/secure-traffic-gcloud
+- https://stackoverflow.com/questions/72778204/how-do-i-avoid-people-being-able-to-access-my-gcp-function-when-not-using-a-gate
+
+`gcloud projects get-iam-policy $CF_PROJECT --flatten=bindings`
+
+`gcloud projects get-iam-policy $CF_PROJECT --flatten="bindings[].members" --format='table(bindings.role)' --filter="bindings.members:$CF_SA_FQDN"`
+
+`gcloud projects get-iam-policy $CF_PROJECT --flatten="bindings[].members" --format='table(bindings.role)' --filter="bindings.members:$CF_SA_FQDN"`
+
+  - Therefore:
+
+```
+gcloud projects get-iam-policy <project-id> --flatten="bindings[].members" --format='table(bindings.role)' --filter="bindings.members:<service-account-fqdn>@<project-id>.iam.gserviceaccount.com"
+ROLE
+roles/cloudfunctions.invoker
+roles/run.invoker
+```
+
+
