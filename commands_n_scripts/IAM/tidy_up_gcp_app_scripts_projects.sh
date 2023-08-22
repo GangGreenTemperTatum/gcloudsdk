@@ -13,3 +13,6 @@ do
 
         echo "$PROJECT_DETAILS|$OWNERS|$BILLING_DETAILS"
 done
+
+# % for i in `cat GenerateAppScriptIDs.txt`; do gcloud projects describe ${i}; done`
+# % for i in `cat GenerateAppScriptIDs.txt`; do gcloud projects delete ${i}; done`
