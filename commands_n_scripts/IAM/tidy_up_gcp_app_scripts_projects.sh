@@ -1,5 +1,8 @@
 #!/bin/bash
 
+TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+echo "Timestamp: $TIMESTAMP"
+
 echo "name|projectId|projectnumber|parentId|lifecycleState|owners|billingEnabled|billingAccountName"
 
 for project in $(gcloud projects list --format="value(projectId)" --sort-by=projectId --filter='Generate AppScript v001')
