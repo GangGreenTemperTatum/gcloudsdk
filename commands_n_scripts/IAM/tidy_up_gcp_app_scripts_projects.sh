@@ -15,4 +15,5 @@ do
 done
 
 # % for i in `cat GenerateAppScriptIDs.txt`; do gcloud projects describe ${i}; done`
+# % gcloud projects list --format="value(projectId)" --sort-by=projectId --filter='Generate AppScript v001' > GenerateAppScriptIDs.txt
 # % for i in `cat GenerateAppScriptIDs.txt`; do gcloud projects delete ${i}; done`
