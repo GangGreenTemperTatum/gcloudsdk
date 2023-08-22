@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "projectId|projectnumber|parentId|lifecycleState|owners|billingEnabled|billingAccountName"
+echo "name|projectId|projectnumber|parentId|lifecycleState|owners|billingEnabled|billingAccountName"
 
 for project in $(gcloud projects list --format="value(projectId)" --sort-by=projectId --filter='Generate AppScript v001')
 do
