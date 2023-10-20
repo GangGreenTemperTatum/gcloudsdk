@@ -1,31 +1,22 @@
 #!/bin/bash
 
-# Specify the user's email address you want to search for
+# Set the user's email address you want to search for
 target_user_email="user@example.com"
 
-# List all projects
-projects=$(gcloud projects list --format="value(projectId)")
+# Set the project ID
+project_id="your-project-id"
 
-# Loop through each project
-for project in $projects; do
-  echo "Project: $project"
-  
-  # List resources created by the target user in the project
-  resources=$(gcloud deployment-manager deployments list --project="$project" --format="value(name)")
-  if [ -n "$resources" ]; then
-    echo "Deployments:"
-    echo "$resources"
-  fi
-  
-  resources=$(gcloud compute instances list --project="$project" --format="value(name)")
-  if [ -n "$resources" ]; then
-    echo "VM Instances:"
-    echo "$resources"
-  fi
-  
-  # You can add more resource types and commands as needed
-  
-  # Insert additional resource checks here for other resource types
-  
+# Set the resource type (e.g., "gce_instance" for Compute Engine VM instances)
+resource_type="gce_instance"
+
+# Fetch Cloud Audit Logs for the specified project
+logs=$(gcloud logging read "protoPayload.authenticationInfo.principalEmail=${target_user_email} AND protoPayload.resourceName:${resource_type}" \
+  --project="$project_id" \
+  --format="value(protoPayload.serviceName, protoPayload.methodName, protoPayload.request, protoPayload.resourceName)")
+
+# Loop through the log entries
+while IFS= read -r log_entry; do
+  echo "Resource Created by $target_user_email:"
+  echo "$log_entry"
   echo
-done
+done <<< "$logs"
