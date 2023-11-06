@@ -46,7 +46,7 @@ while read -r project; do
   # Loop through each IP in the IP list
   while read -r ip; do
     # Run the gcloud command with the current project and IP, responding with "N" to the gcloud prompt if the Compute API engine is not enabled
-    output=$(gcloud compute addresses list --project="$project" | grep "$ip" 2>/dev/null)
+    output=$(gcloud compute addresses list --project="$project" | grep "$ip" 2>/dev/null 1>./check_ips_against_projects_no_match.log)
     if [ -n "$output" ]; then
       echo -e "IP found - Project: $project, IP: $ip\n" | tee -a check_ips_against_project_match.log
     else
