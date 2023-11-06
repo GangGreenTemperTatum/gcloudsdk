@@ -7,7 +7,7 @@ project_list="./project.txt"
 ip_list="./ip.txt"
 projects_with_compute_list="./projects_with_compute.txt"
 
-echo "cat the DNS record file and grep for IPs to output to ip.txt"
+echo -e "cat the DNS record file and grep for IPs to output to ip.txt\n"
 # Execute a cat with ipv4-compatible grep to output a list of IPs and store the output in the IP list
 cat ~/git/x/y/z/dns/record.tf | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b" >> "./ip.txt"
 
