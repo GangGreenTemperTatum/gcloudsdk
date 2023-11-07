@@ -54,3 +54,5 @@ while read -r project; do
     fi
   done < "$ip_list"
 done < "$projects_with_compute_list"
+
+echo -e "Script completed...\n" && ls | grep 'check_ip\|error'
