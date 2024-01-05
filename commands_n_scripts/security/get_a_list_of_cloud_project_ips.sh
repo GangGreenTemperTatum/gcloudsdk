@@ -30,7 +30,7 @@ echo -e "Starting the second phase of the script and dumping external IPs.Succes
 
 # Loop through each project in the projects_with_compute_list against the list of IP addresses
 while read -r projects_with_compute_list; do
-  gcloud compute addresses list --global --project="$compute_project" 2>/dev/null)
+  gcloud compute addresses list --global --project="$compute_project" 2>/dev/null
   if [ $? -eq 0 ]; then
     echo "$output" >> cloud_project_ips.log
     echo "IPs found for $projects_with_compute_list"
@@ -39,4 +39,4 @@ while read -r projects_with_compute_list; do
   fi
 done < "$projects_with_compute_list"
 
-echo -e "Script completed...\n" && ls -halt | grep 'ips'
+echo -e "Script completed...Now time to recon and footprint\n" && ls -halt | grep 'ips'
