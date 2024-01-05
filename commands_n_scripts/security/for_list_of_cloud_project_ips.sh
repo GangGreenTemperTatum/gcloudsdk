@@ -8,7 +8,7 @@ fi
 
 # Iterate over each line in the file and execute the command
 while IFS= read -r compute_project || [[ -n "$compute_project" ]]; do
-    command="gcloud compute addresses list --project=\"$compute_project\""
+    command="gcloud compute addresses list --global --project=\"$compute_project\""
     echo "Executing: $command"
     eval "$command"
 done < "$file_path"
