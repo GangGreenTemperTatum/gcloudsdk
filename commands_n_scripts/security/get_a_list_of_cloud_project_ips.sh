@@ -20,7 +20,7 @@ while read -r project; do
   # Run the gcloud services list command for the current project
   gcloud services list --enabled --project="$project" | grep "compute.googleapis.com" 2>/dev/null
   if [ $? -eq 0 ]; then
-    echo "$project" >> "$compute_project"
+    echo "$project" >> "$projects_with_compute_list"
     echo "Adding $project to $projects_with_compute_list as it has 'compute.googleapis.com' enabled"
   fi
 done < "$project_list"
@@ -29,14 +29,14 @@ done < "$project_list"
 echo -e "Starting the second phase of the script and dumping external IPs.Successful matches will print to stdout and get_ips_against_project_match.log, unsuccessful matches will print to stderr and no_ips_against_projects.log\n"
 
 # Loop through each project in the projects_with_compute_list against the list of IP addresses
-while read -r compute_project; do
-  gcloud compute addresses list --project="$compute_project" 2>/dev/null)
+while read -r projects_with_compute_list; do
+  gcloud compute addresses list --global --project="$compute_project" 2>/dev/null)
   if [ $? -eq 0 ]; then
     echo "$output" >> cloud_project_ips.log
-    echo "IPs found for $compute_project"
+    echo "IPs found for $projects_with_compute_list"
   else
-    echo "No IPs found for $compute_project"
+    echo "No IPs found for $projects_with_compute_list"
   fi
-done < "$compute_project"
+done < "$projects_with_compute_list"
 
-echo -e "Script completed...Now time to run some recon and footprinting\n" && ls -halt | grep 'ips'
+echo -e "Script completed...\n" && ls -halt | grep 'ips'
