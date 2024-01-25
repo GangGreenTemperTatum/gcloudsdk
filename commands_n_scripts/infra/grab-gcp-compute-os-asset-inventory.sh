@@ -4,16 +4,20 @@
 read -p "Enter your project ID: " project_id
 
 # Get the list of VMs and store it in a file
-gcloud compute instances os-inventory list-instances --project="$project_id" --format="value(NAME)" > vms_list.txt
+gcloud compute instances os-inventory list-instances --project="$project_id" --format="value(NAME, ZONE)" > vms_list.txt
 
 # Check if the file is not empty before proceeding
 if [ -s vms_list.txt ]; then
 
     # Iterate through each VM and run the describe command
-    while IFS= read -r vm_name; do
-        # Run the describe command for each VM
-        gcloud compute instances os-inventory describe "$vm_name" --project "$project_id" | jq '.SystemInformation | [ .Hostname, .ShortName, .LongName ] | @csv' #2>&1 | tee vm_inventory_info.txt # && > "$vm_name"_info.txt
-        # | jq -c '.SystemInformation | { Hostname, ShortName, LongName }' | grep "debian" | jq -r `
+    while IFS= read -r vm_info; do
+        # Parse VM name and zone from the line
+        vm_name=$(echo "$vm_info" | awk '{print $1}')
+        zone=$(echo "$vm_info" | awk '{print $2}')
+
+        # Run the describe command for each VM with the --zone flag
+        gcloud compute instances os-inventory describe "$vm_name" --project="$project_id" --zone="$zone" --format json | jq '.SystemInformation | { Hostname, ShortName, LongName }' | jq #2>&1 | tee vm_inventory_info.txt # && > "$vm_name"_info.txt
+        #> "$vm_name"_info.txt
 
         # Extract and print the required values to stdout
         hostname=$(grep 'Hostname:' "$vm_name"_info.txt | awk '{print $2}')
