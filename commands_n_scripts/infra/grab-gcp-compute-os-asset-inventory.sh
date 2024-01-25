@@ -17,6 +17,10 @@ if [ -s vms_list.txt ]; then
 
         # Run the describe command for each VM with the --zone flag
         gcloud compute instances os-inventory describe "$vm_name" --project="$project_id" --zone="$zone" --format json | jq '.SystemInformation | { Hostname, ShortName, LongName }' | jq #2>&1 | tee vm_inventory_info.txt # && > "$vm_name"_info.txt
+
+        # --format json | jq '.SystemInformation | { Hostname, ShortName, LongName }' -> Working jq with no CSV flatter format
+        # --format json | jq '.SystemInformation | [ .Hostname, .ShortName, .LongName ] | @csv' -> Example with flatter csv format output
+        # | jq -c '.SystemInformation | { Hostname, ShortName, LongName }' | grep "debian" | jq -r `
         #> "$vm_name"_info.txt
 
         # Extract and print the required values to stdout
