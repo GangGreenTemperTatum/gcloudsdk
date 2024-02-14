@@ -1,4 +1,4 @@
-PROJECTS=$(gcloud projects list --format="value(name)")
+PROJECTS=$(gcloud projects list --format="value(projectId)")
 
 for project in $PROJECTS
 do
